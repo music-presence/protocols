@@ -1,0 +1,3 @@
+[submodule "third_party/protoc-gen-jsonschema"]
+	path = third_party/protoc-gen-jsonschema
+	url = https://github.com/pubg/protoc-gen-jsonschema

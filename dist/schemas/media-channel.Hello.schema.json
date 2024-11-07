@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/.media_channel.Hello",
+  "$defs": {
+    ".media_channel.MediaSource": {
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "friendly_name"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "friendly_name"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/.media_channel.MediaSource.id"
+        },
+        "deprecated_ids": {
+          "$ref": "#/$defs/.media_channel.MediaSource.deprecated_ids"
+        },
+        "friendly_name": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.MediaSource.friendly_name"
+            }
+          ]
+        },
+        "application_name": {
+          "$ref": "#/$defs/.media_channel.MediaSource.application_name"
+        }
+      },
+      "type": "object",
+      "required": [
+        "id",
+        "application_name"
+      ],
+      "description": "Information identifying the source of Media Metadata.\n This can e.g. be a plugin in a media player, a browser extension\n or the Application that is playing the media directly."
+    },
+    ".media_channel.MediaSource.id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z][a-zA-Z0-9+-_/\\.]*$",
+      "description": "An identifier of the software that is the source for reported Media.\n This could e.g. be the URL to a GitHub repository without the protocol,\n so receivers of this message know where to go if there are issues.\n Example: \"github.com/ungive/foo_mediacontrol\" (foobar2000 plugin)\n Example: \"github.com/ungive/media-control-extension\" (browser extension)"
+    },
+    ".media_channel.MediaSource.deprecated_ids": {
+      "items": {
+        "type": "string",
+        "description": "Identifiers that were previously used for the \"id\" field of this message.\n Communicating these is useful when e.g. a repository URL is used as an ID,\n but the repository moved to a different URL."
+      },
+      "type": "array",
+      "description": "Identifiers that were previously used for the \"id\" field of this message.\n Communicating these is useful when e.g. a repository URL is used as an ID,\n but the repository moved to a different URL."
+    },
+    ".media_channel.MediaSource.friendly_name": {
+      "type": "string",
+      "pattern": "^[ -~]+$",
+      "description": "A user-friendly, easy-to-read display name for this source.\n Should be the name of the software as known to users of the Application.\n Recommended to only be used by Application plugins or extensions.\n Example: \"foo_mediacontrol plugin\" (foobar2000 plugin)\n Example: \"Media Control extension\" (browser extension)"
+    },
+    ".media_channel.MediaSource.application_name": {
+      "type": "string",
+      "pattern": "^[ -~]+$",
+      "description": "The name of the application the software for this source is running in.\n Example: \"foobar2000\" or \"Firefox\""
+    },
+    ".media_channel.Hello": {
+      "properties": {
+        "media_source": {
+          "$ref": "#/$defs/.media_channel.Hello.media_source"
+        }
+      },
+      "type": "object",
+      "required": [
+        "media_source"
+      ],
+      "description": "First message sent by an Application to the Hub upon connecting.\n Sends metadata about the Application that is connecting to the Hub.\n -\u003e"
+    },
+    ".media_channel.Hello.media_source": {
+      "$ref": "#/$defs/.media_channel.MediaSource",
+      "description": "Description of the Media Source."
+    }
+  },
+  "type": "object"
+}

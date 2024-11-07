@@ -6,18 +6,21 @@
 
 ## Glossary
 
-**Hub** - The "Music Presence" desktop application  
-**Application** - Any other application running on a desktop computer  
-**Media** - Digital media including music and videos
-that is played back on a desktop device  
+**Protocol** - The protocol described in this document.  
+**Hub** - The "Music Presence" desktop application.  
+**Application** - Any other application running on a desktop computer.  
+**Media** - Digital media including music and videos.
+that is played back by an Application.  
 **Media Metadata** - Information describing and identifying the media,
-e.g. media title, artist and album  
+e.g. media title, artist and album.  
+**Media Source** - A source of Media,
+such as an Application, a plugin in an Application or a browser extension.  
 **Native API** - An operating-system-specific, natively supported API
-that supplies Media Metadata about media that is being played by an Application
-and that is usually consumed by the Hub.
+that supplies Media Metadata about Media that is being played by an Application
+and that is usually consumed by the Hub to get information about playing media.
 This would be e.g. SMTC on Windows 10 and later,
 MediaRemote on macOS 11 and later
-and MPRIS on Linux devices
+and MPRIS on Linux devices.  
 
 ## Abstract
 
@@ -37,7 +40,7 @@ to be able to easily communicate to the Hub information
 about currently playing Media within the Application,
 with an emphasis on music.
 More specifically, Applications are expected to always keep the Hub up-to-date
-about Media that that the Application is playing
+about Media that the Application is playing
 for the duration the Application is connected to the Hub,
 including some or all relevant Media Metadata.
 The protocol is designed to lower the entry barrier
@@ -50,6 +53,36 @@ using an HTTP server that runs on a specific port on the device
 that the Application and the Hub are running on.
 In that scenario the Hub is application that exposes the server on that port
 and Applications open connections to that port.
+
+## Message format
+
+Protocol messages must be formatted as JSON.
+
+This format is universally accessible in almost all application contexts,
+e.g. browsers and desktop applications,
+and can be populated easily with very little code,
+yet it is complex enough to convey rich information about Media Metadata.
+
+## Identifying the connected Application
+
+## Identifying the Media Source
+
+The source of Media must be uniquely identifiable
+within and outside of the Protocol.
+The Hub must provide 
+
+For this purpose Media Metadata must always have a `source` field
+which must be set to a value that can be associated
+with a known Media Source by the Hub.
+
+
+
+For this purpose each media source identifier must be:
+
+- either a Root Domain string in Reverse Domain Name Notation, or
+- an arbitrary alphanumeric string that may also contain dashes (`-`).
+
+### Matching Protocol Media Metadata with Native API counterparts
 
 ## Use Cases
 
@@ -65,7 +98,7 @@ by detecting the domain of the website it is playing on
 and then report separate media for each website.
 
 This requires some way of associating Media Metadata with some kind of "source",
-however that source may be identified.
+which should be the website domain or URL in this scenario.
 
 ### UC02 - Reporting Media Metadata that cannot be reported natively
 

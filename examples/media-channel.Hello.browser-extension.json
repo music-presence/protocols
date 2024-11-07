@@ -1,0 +1,8 @@
+{
+    "$schema": "../dist/schemas/media-channel.Hello.schema.json",
+    "source": {
+        "id": "github.com/ungive/media-control-extension",
+        "friendly_name": "Media Control",
+        "application_name": "Google Chrome"
+    }
+}

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package media_channel;
+
+import "jsonschema.proto";
+option go_package = "github.com/utrack/pubg-jsonschema/pkg/schema";
+
+// Information identifying the source of Media Metadata.
+// This can e.g. be a plugin in a media player, a browser extension
+// or the Application that is playing the media directly.
+message MediaSource {
+  // An identifier of the software that is the source for reported Media.
+  // This could e.g. be the URL to a GitHub repository without the protocol,
+  // so receivers of this message know where to go if there are issues.
+  // Example: "github.com/ungive/foo_mediacontrol" (foobar2000 plugin)
+  // Example: "github.com/ungive/media-control-extension" (browser extension)
+  string id = 1 [
+    json_name = "id",
+    (pubg.jsonschema.field) = {
+      string : {
+        pattern : "^[a-zA-Z][a-zA-Z0-9+-_/\\.]*$",
+      }
+    }
+  ];
+  // Identifiers that were previously used for the "id" field of this message.
+  // Communicating these is useful when e.g. a repository URL is used as an ID,
+  // but the repository moved to a different URL.
+  repeated string deprecated_ids = 4 [ json_name = "deprecated_ids" ];
+  // A user-friendly, easy-to-read display name for this source.
+  // Should be the name of the software as known to users of the Application.
+  // Recommended to only be used by Application plugins or extensions.
+  // Example: "foo_mediacontrol plugin" (foobar2000 plugin)
+  // Example: "Media Control extension" (browser extension)
+  optional string friendly_name = 2 [
+    json_name = "friendly_name",
+    (pubg.jsonschema.field) = {
+      string : {
+        pattern : "^[ -~]+$",
+      }
+    }
+  ];
+  // The name of the application the software for this source is running in.
+  // Example: "foobar2000" or "Firefox"
+  string application_name = 3 [
+    json_name = "application_name",
+    (pubg.jsonschema.field) = {
+      string : {
+        pattern : "^[ -~]+$",
+      }
+    }
+  ];
+}
+
+// First message sent by an Application to the Hub upon connecting.
+// Sends metadata about the Application that is connecting to the Hub.
+message Hello { // ->
+  // Description of the Media Source.
+  MediaSource media_source = 1;
+}

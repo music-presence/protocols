@@ -1,0 +1,6 @@
+/bin
+/build
+/.venv
+/.vscode
+/notes*
+/todo.txt
