@@ -27,7 +27,6 @@ def gen_proto_message(c: C, proto: str, message: str):
                 "--jsonschema_out=./dist/schemas",
                 f"--jsonschema_opt=entrypoint_message={message}",
                 f"--jsonschema_opt=output_file_suffix=.{message}.schema.json",
-                "--jsonschema_opt=draft=Draft07",
                 "-I ./third_party/protoc-gen-jsonschema",
                 "-I ./src",
                 f"./src/{proto}.proto",
