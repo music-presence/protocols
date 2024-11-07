@@ -1,7 +1,7 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$ref": "#/$defs/.media_channel.Hello",
-  "$defs": {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/.media_channel.Hello",
+  "definitions": {
     ".media_channel.MediaSource": {
       "allOf": [
         {
@@ -67,7 +67,7 @@
       ],
       "properties": {
         "id": {
-          "$ref": "#/$defs/.media_channel.MediaSource.id"
+          "$ref": "#/definitions/.media_channel.MediaSource.id"
         },
         "name": {
           "oneOf": [
@@ -75,7 +75,7 @@
               "type": "null"
             },
             {
-              "$ref": "#/$defs/.media_channel.MediaSource.name"
+              "$ref": "#/definitions/.media_channel.MediaSource.name"
             }
           ]
         },
@@ -85,7 +85,7 @@
               "type": "null"
             },
             {
-              "$ref": "#/$defs/.media_channel.MediaSource.instance_id"
+              "$ref": "#/definitions/.media_channel.MediaSource.instance_id"
             }
           ]
         },
@@ -95,12 +95,12 @@
               "type": "null"
             },
             {
-              "$ref": "#/$defs/.media_channel.MediaSource.application_name"
+              "$ref": "#/definitions/.media_channel.MediaSource.application_name"
             }
           ]
         },
         "deprecated_ids": {
-          "$ref": "#/$defs/.media_channel.MediaSource.deprecated_ids"
+          "$ref": "#/definitions/.media_channel.MediaSource.deprecated_ids"
         }
       },
       "type": "object",
@@ -130,7 +130,7 @@
       "description": "The name of the Application instance that is playing the media, if any.\n Should be set if a Plugin that is running as part of the Application\n is reporting the Media Metadata on behalf of the Application.\n Should not be set if the Application is reporting the media directly,\n as the application name should already be set in the \"name\" field.\n Example: \"foobar2000\", \"Google Chrome\" or \"Firefox\""
     },
     ".media_channel.MediaSource.deprecated_ids": {
-      "items": {
+      "additionalItems": {
         "type": "string",
         "pattern": "^[a-zA-Z][a-zA-Z0-9+-_/\\.]*$",
         "description": "Identifiers that were used in the past by this Media Source.\n Communicating these is useful when e.g. a repository URL is used\n as an ID, but the repository moved to a different URL.\n Example: [\"github.com/user/old_repo\"]"
@@ -140,18 +140,18 @@
     },
     ".media_channel.Hello": {
       "properties": {
-        "media_source": {
-          "$ref": "#/$defs/.media_channel.Hello.media_source"
+        "source": {
+          "$ref": "#/definitions/.media_channel.Hello.source"
         }
       },
       "type": "object",
       "required": [
-        "media_source"
+        "source"
       ],
       "description": "First message sent by an Application to the Hub upon connecting.\n Sends metadata about the Application that is connecting to the Hub."
     },
-    ".media_channel.Hello.media_source": {
-      "$ref": "#/$defs/.media_channel.MediaSource",
+    ".media_channel.Hello.source": {
+      "$ref": "#/definitions/.media_channel.MediaSource",
       "description": "Description of the Media Source that connected to the Hub."
     }
   },
