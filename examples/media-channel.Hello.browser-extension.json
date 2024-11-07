@@ -1,10 +1,12 @@
 {
-    "$schema": "../dist/schemas/media-channel.Hello.schema.json",
-    "$comment": "Example of a browser extension being the media source, which may have multiple running instances on the same device",
+  "$schema": "../dist/schemas/media-channel.Message.schema.json",
+  "$comment": "Example of a browser extension being the media source, which may have multiple running instances on the same device",
+  "hello": {
     "media_source": {
-        "id": "github.com/ungive/media-control-extension",
-        "name": "Media Control",
-        "instance_id": "google_chrome",
-        "application_name": "Google Chrome"
+      "id": "github.com/ungive/media-control-extension",
+      "name": "Media Control",
+      "instance_id": "google_chrome",
+      "application_name": "Google Chrome"
     }
+  }
 }

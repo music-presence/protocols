@@ -5,7 +5,6 @@ syntax = "proto3";
 package media_channel;
 
 import "jsonschema.proto";
-option go_package = "github.com/utrack/pubg-jsonschema/pkg/schema";
 
 // Information identifying the source of Media Metadata.
 // This can e.g. be a Plugin in a media player, a browser extension
@@ -87,7 +86,11 @@ message MediaSource {
 
 // First message sent by an Application to the Hub upon connecting.
 // Sends metadata about the Application that is connecting to the Hub.
-message Hello { // ->
+message Hello {
   // Description of the Media Source that connected to the Hub.
-  MediaSource media_source = 1;
+  MediaSource media_source = 1 [ json_name = "media_source" ];
+}
+
+message Message {
+  oneof payload { Hello hello = 1 [ json_name = "hello" ]; }
 }

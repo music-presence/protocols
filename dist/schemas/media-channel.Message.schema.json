@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$ref": "#/$defs/.media_channel.Hello",
+  "$ref": "#/$defs/.media_channel.Message",
   "$defs": {
     ".media_channel.MediaSource": {
       "allOf": [
@@ -153,6 +153,46 @@
     ".media_channel.Hello.media_source": {
       "$ref": "#/$defs/.media_channel.MediaSource",
       "description": "Description of the Media Source that connected to the Hub."
+    },
+    ".media_channel.Message": {
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "hello"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "hello"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "hello": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.Message.hello"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    ".media_channel.Message.hello": {
+      "$ref": "#/$defs/.media_channel.Hello"
     }
   },
   "type": "object"
