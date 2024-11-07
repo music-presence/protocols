@@ -1,11 +1,14 @@
 {
   "$schema": "../dist/schemas/media-channel.Message.schema.json",
-  "$comment": "Example of a Plugin that runs as part of the foobar2000 Application being the Media Source",
+  "$comment": "Example of a Plugin that runs as part of the foobar2000 Application reporting Media Metadata",
   "hello": {
-    "source": {
+    "application": {
+      "id": "foobar2000",
+      "name": "foobar2000"
+    },
+    "plugin": {
       "id": "github.com/ungive/foo_mediacontrol",
-      "name": "foo_mediacontrol",
-      "application_name": "foobar2000"
+      "name": "foo_mediacontrol"
     }
   }
 }

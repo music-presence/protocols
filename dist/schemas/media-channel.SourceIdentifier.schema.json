@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$ref": "#/definitions/.media_channel.Hello",
+  "$ref": "#/definitions/.media_channel.SourceIdentifier",
   "definitions": {
     ".media_channel.SourceIdentifier": {
       "allOf": [
@@ -67,58 +67,6 @@
       },
       "type": "array",
       "description": "Identifiers that were used for the \"id\" field in the past.\n Communicating these is useful when e.g. a repository URL is used\n as an ID, but the repository moved to a different URL,\n but it should still be possible to associate the old ID with this source.\n Example: [\"github.com/user/old_repo\"]"
-    },
-    ".media_channel.Hello": {
-      "allOf": [
-        {
-          "oneOf": [
-            {
-              "required": [
-                "plugin"
-              ]
-            },
-            {
-              "not": {
-                "anyOf": [
-                  {
-                    "required": [
-                      "plugin"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
-      "properties": {
-        "application": {
-          "$ref": "#/definitions/.media_channel.Hello.application"
-        },
-        "plugin": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/definitions/.media_channel.Hello.plugin"
-            }
-          ]
-        }
-      },
-      "type": "object",
-      "required": [
-        "application"
-      ],
-      "description": "First message sent by an Application to the Hub upon connecting.\n Sends metadata about the Application that is connecting to the Hub."
-    },
-    ".media_channel.Hello.application": {
-      "$ref": "#/definitions/.media_channel.SourceIdentifier",
-      "description": "The Application that connected to the Hub."
-    },
-    ".media_channel.Hello.plugin": {
-      "$ref": "#/definitions/.media_channel.SourceIdentifier",
-      "description": "Information about the Plugin that reports Media Metadata\n on behalf of the Application that connected to the Hub."
     }
   },
   "type": "object"

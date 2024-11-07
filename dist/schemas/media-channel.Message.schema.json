@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$ref": "#/definitions/.media_channel.Message",
   "definitions": {
-    ".media_channel.MediaSource": {
+    ".media_channel.SourceIdentifier": {
       "allOf": [
         {
           "oneOf": [
@@ -23,51 +23,11 @@
               }
             }
           ]
-        },
-        {
-          "oneOf": [
-            {
-              "required": [
-                "instance_id"
-              ]
-            },
-            {
-              "not": {
-                "anyOf": [
-                  {
-                    "required": [
-                      "instance_id"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "oneOf": [
-            {
-              "required": [
-                "application_name"
-              ]
-            },
-            {
-              "not": {
-                "anyOf": [
-                  {
-                    "required": [
-                      "application_name"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
         }
       ],
       "properties": {
         "id": {
-          "$ref": "#/definitions/.media_channel.MediaSource.id"
+          "$ref": "#/definitions/.media_channel.SourceIdentifier.id"
         },
         "name": {
           "oneOf": [
@@ -75,282 +35,90 @@
               "type": "null"
             },
             {
-              "$ref": "#/definitions/.media_channel.MediaSource.name"
-            }
-          ]
-        },
-        "instance_id": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/definitions/.media_channel.MediaSource.instance_id"
-            }
-          ]
-        },
-        "application_name": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/definitions/.media_channel.MediaSource.application_name"
+              "$ref": "#/definitions/.media_channel.SourceIdentifier.name"
             }
           ]
         },
         "deprecated_ids": {
-          "$ref": "#/definitions/.media_channel.MediaSource.deprecated_ids"
+          "$ref": "#/definitions/.media_channel.SourceIdentifier.deprecated_ids"
         }
       },
       "type": "object",
       "required": [
         "id"
       ],
-      "description": "Information identifying the source of Media Metadata.\n This can e.g. be a Plugin in a media player, a browser extension\n or the Application that is playing the media directly."
+      "description": "An identifier for a Media Source."
     },
-    ".media_channel.MediaSource.id": {
+    ".media_channel.SourceIdentifier.id": {
       "type": "string",
       "pattern": "^[a-zA-Z][a-zA-Z0-9+-_/\\.]*$",
-      "description": "An arbitrary identifier of the Media Source (Plugin or Application) that\n is reporting the media. A meaningful value should be chosen for this ID.\n Example: \"github.com/ungive/foo_mediacontrol\" (foobar2000 plugin)\n Example: \"github.com/ungive/media-control-extension\" (browser extension)\n Example: \"your-app-name\" (standalone application, not a plugin)"
+      "description": "An arbitrary identifier. A meaningful value should be chosen for this ID.\n Example: \"github.com/ungive/foo_mediacontrol\" (foobar2000 plugin)\n Example: \"github.com/ungive/media-control-extension\" (browser extension)\n Example: \"your-app-name\" (standalone application, not a plugin)"
     },
-    ".media_channel.MediaSource.name": {
+    ".media_channel.SourceIdentifier.name": {
       "type": "string",
       "pattern": "^[ -~]+$",
-      "description": "A user-friendly, easy-to-read display name for this Media Source.\n Should be the name of the Plugin or Application that is known to the user.\n Example: \"foo_mediacontrol\" (foobar2000 plugin)\n Example: \"Media Control\" (browser extension)\n Example: \"Your App Name\" (standalone application)"
+      "description": "A user-friendly display name for this source.\n Example: \"foo_mediacontrol\" (foobar2000 plugin)\n Example: \"Media Control\" (browser extension)\n Example: \"TIDAL\" (standalone application)"
     },
-    ".media_channel.MediaSource.instance_id": {
-      "type": "string",
-      "pattern": "^[a-zA-Z0-9_]+$",
-      "description": "An identifier of this Plugin's instance. This is used to disambiguate\n multiple instances of the same Media Source, in case they have the same\n value in the \"id\" field. An example for this may be a browser extension\n that is running in multiple browsers (Applications) on the same device.\n May only contain alphanumeric characters and underscores.\n This field is optional.\n Examples: \"google_chrome\", \"firefox\", \"INSTANCE_1\" or \"1\""
-    },
-    ".media_channel.MediaSource.application_name": {
-      "type": "string",
-      "pattern": "^[ -~]+$",
-      "description": "The name of the Application instance that is playing the media, if any.\n Should be set if a Plugin that is running as part of the Application\n is reporting the Media Metadata on behalf of the Application.\n Should not be set if the Application is reporting the media directly,\n as the application name should already be set in the \"name\" field.\n Example: \"foobar2000\", \"Google Chrome\" or \"Firefox\""
-    },
-    ".media_channel.MediaSource.deprecated_ids": {
+    ".media_channel.SourceIdentifier.deprecated_ids": {
       "additionalItems": {
         "type": "string",
         "pattern": "^[a-zA-Z][a-zA-Z0-9+-_/\\.]*$",
-        "description": "Identifiers that were used in the past by this Media Source.\n Communicating these is useful when e.g. a repository URL is used\n as an ID, but the repository moved to a different URL.\n Example: [\"github.com/user/old_repo\"]"
+        "description": "Identifiers that were used for the \"id\" field in the past.\n Communicating these is useful when e.g. a repository URL is used\n as an ID, but the repository moved to a different URL,\n but it should still be possible to associate the old ID with this source.\n Example: [\"github.com/user/old_repo\"]"
       },
       "type": "array",
-      "description": "Identifiers that were used in the past by this Media Source.\n Communicating these is useful when e.g. a repository URL is used\n as an ID, but the repository moved to a different URL.\n Example: [\"github.com/user/old_repo\"]"
-    },
-    ".media_channel.CoverImage": {
-      "allOf": [
-        {
-          "oneOf": [
-            {
-              "required": [
-                "url"
-              ]
-            },
-            {
-              "required": [
-                "raw"
-              ]
-            },
-            {
-              "not": {
-                "anyOf": [
-                  {
-                    "required": [
-                      "url"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "raw"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
-      "properties": {
-        "url": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/definitions/.media_channel.CoverImage.url"
-            }
-          ]
-        },
-        "raw": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/definitions/.media_channel.CoverImage.raw"
-            }
-          ]
-        }
-      },
-      "type": "object"
-    },
-    ".media_channel.CoverImage.ImageData": {
-      "properties": {
-        "data": {
-          "$ref": "#/definitions/.media_channel.CoverImage.ImageData.data"
-        },
-        "content_type": {
-          "$ref": "#/definitions/.media_channel.CoverImage.ImageData.content_type"
-        }
-      },
-      "type": "object",
-      "required": [
-        "data",
-        "content_type"
-      ]
-    },
-    ".media_channel.CoverImage.ImageData.data": {
-      "type": "string",
-      "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
-    },
-    ".media_channel.CoverImage.ImageData.content_type": {
-      "type": "string"
-    },
-    ".media_channel.CoverImage.url": {
-      "type": "string",
-      "format": "uri"
-    },
-    ".media_channel.CoverImage.raw": {
-      "$ref": "#/definitions/.media_channel.CoverImage.ImageData"
-    },
-    ".media_channel.MediaMetadata": {
-      "allOf": [
-        {
-          "oneOf": [
-            {
-              "required": [
-                "album"
-              ]
-            },
-            {
-              "not": {
-                "anyOf": [
-                  {
-                    "required": [
-                      "album"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "oneOf": [
-            {
-              "required": [
-                "cover"
-              ]
-            },
-            {
-              "not": {
-                "anyOf": [
-                  {
-                    "required": [
-                      "cover"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
-      "properties": {
-        "title": {
-          "$ref": "#/definitions/.media_channel.MediaMetadata.title"
-        },
-        "artists": {
-          "$ref": "#/definitions/.media_channel.MediaMetadata.artists"
-        },
-        "album": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/definitions/.media_channel.MediaMetadata.album"
-            }
-          ]
-        },
-        "cover": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/definitions/.media_channel.MediaMetadata.cover"
-            }
-          ]
-        }
-      },
-      "type": "object",
-      "required": [
-        "title"
-      ],
-      "description": "Media Metadata that describes media being played by the Application."
-    },
-    ".media_channel.MediaMetadata.title": {
-      "type": "string",
-      "minLength": 1,
-      "description": "The title of the media. This field is mandatory.\n The title is used to uniquely identify the Media in the context\n of currently playing media of the Application."
-    },
-    ".media_channel.MediaMetadata.artists": {
-      "additionalItems": {
-        "type": "string",
-        "description": "The artists that created the media."
-      },
-      "type": "array",
-      "description": "The artists that created the media."
-    },
-    ".media_channel.MediaMetadata.album": {
-      "type": "string",
-      "description": "The album this track is featured on."
-    },
-    ".media_channel.MediaMetadata.cover": {
-      "$ref": "#/definitions/.media_channel.CoverImage",
-      "description": "The cover image of the album."
+      "description": "Identifiers that were used for the \"id\" field in the past.\n Communicating these is useful when e.g. a repository URL is used\n as an ID, but the repository moved to a different URL,\n but it should still be possible to associate the old ID with this source.\n Example: [\"github.com/user/old_repo\"]"
     },
     ".media_channel.Hello": {
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "plugin"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "plugin"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
       "properties": {
-        "source": {
-          "$ref": "#/definitions/.media_channel.Hello.source"
+        "application": {
+          "$ref": "#/definitions/.media_channel.Hello.application"
+        },
+        "plugin": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/.media_channel.Hello.plugin"
+            }
+          ]
         }
       },
       "type": "object",
       "required": [
-        "source"
+        "application"
       ],
       "description": "First message sent by an Application to the Hub upon connecting.\n Sends metadata about the Application that is connecting to the Hub."
     },
-    ".media_channel.Hello.source": {
-      "$ref": "#/definitions/.media_channel.MediaSource",
-      "description": "Description of the Media Source that connected to the Hub."
+    ".media_channel.Hello.application": {
+      "$ref": "#/definitions/.media_channel.SourceIdentifier",
+      "description": "The Application that connected to the Hub."
     },
-    ".media_channel.Update": {
-      "properties": {
-        "metadata": {
-          "$ref": "#/definitions/.media_channel.Update.metadata"
-        }
-      },
-      "type": "object",
-      "required": [
-        "metadata"
-      ]
-    },
-    ".media_channel.Update.metadata": {
-      "$ref": "#/definitions/.media_channel.MediaMetadata"
+    ".media_channel.Hello.plugin": {
+      "$ref": "#/definitions/.media_channel.SourceIdentifier",
+      "description": "Information about the Plugin that reports Media Metadata\n on behalf of the Application that connected to the Hub."
     },
     ".media_channel.Message": {
       "allOf": [
@@ -362,21 +130,11 @@
               ]
             },
             {
-              "required": [
-                "update"
-              ]
-            },
-            {
               "not": {
                 "anyOf": [
                   {
                     "required": [
                       "hello"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "update"
                     ]
                   }
                 ]
@@ -395,25 +153,12 @@
               "$ref": "#/definitions/.media_channel.Message.hello"
             }
           ]
-        },
-        "update": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/definitions/.media_channel.Message.update"
-            }
-          ]
         }
       },
       "type": "object"
     },
     ".media_channel.Message.hello": {
       "$ref": "#/definitions/.media_channel.Hello"
-    },
-    ".media_channel.Message.update": {
-      "$ref": "#/definitions/.media_channel.Update"
     }
   },
   "type": "object"
