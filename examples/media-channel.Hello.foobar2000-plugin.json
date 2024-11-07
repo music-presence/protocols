@@ -1,8 +1,0 @@
-{
-    "$schema": "../dist/schemas/media-channel.Hello.schema.json",
-    "source": {
-        "id": "github.com/ungive/foo_media+control",
-        "friendly_name": "foo_mediacontrol",
-        "application_name": "foobar2000"
-    }
-}

@@ -7,14 +7,18 @@
 ## Glossary
 
 **Protocol** - The protocol described in this document.  
-**Hub** - The "Music Presence" desktop application.  
+**Hub** - The "Music Presence" desktop application,
+shortened to "Hub" for brevity.  
 **Application** - Any other application running on a desktop computer.  
+**Plugin** - A piece of software running inside an Application
+that is not directly part of the Application.
+Browser extensions are also considered plugins.  
 **Media** - Digital media including music and videos.
 that is played back by an Application.  
-**Media Metadata** - Information describing and identifying the media,
+**Media Metadata** - Information describing and identifying the Media,
 e.g. media title, artist and album.  
 **Media Source** - A source of Media,
-such as an Application, a plugin in an Application or a browser extension.  
+such as an Application or a Plugin in an Application.  
 **Native API** - An operating-system-specific, natively supported API
 that supplies Media Metadata about Media that is being played by an Application
 and that is usually consumed by the Hub to get information about playing media.
@@ -54,6 +58,9 @@ that the Application and the Hub are running on.
 In that scenario the Hub is application that exposes the server on that port
 and Applications open connections to that port.
 
+An Application Plugin may also report Media Metadata
+on behalf of the Application that is playing the Media.
+
 ## Message format
 
 Protocol messages must be formatted as JSON.
@@ -75,14 +82,11 @@ For this purpose Media Metadata must always have a `source` field
 which must be set to a value that can be associated
 with a known Media Source by the Hub.
 
+TODO
 
+## Matching Protocol Media Metadata with Native API counterparts
 
-For this purpose each media source identifier must be:
-
-- either a Root Domain string in Reverse Domain Name Notation, or
-- an arbitrary alphanumeric string that may also contain dashes (`-`).
-
-### Matching Protocol Media Metadata with Native API counterparts
+TODO
 
 ## Use Cases
 

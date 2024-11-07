@@ -8,7 +8,7 @@
           "oneOf": [
             {
               "required": [
-                "friendly_name"
+                "name"
               ]
             },
             {
@@ -16,7 +16,47 @@
                 "anyOf": [
                   {
                     "required": [
-                      "friendly_name"
+                      "name"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "instance_id"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "instance_id"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "application_name"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "application_name"
                     ]
                   }
                 ]
@@ -29,52 +69,74 @@
         "id": {
           "$ref": "#/$defs/.media_channel.MediaSource.id"
         },
-        "deprecated_ids": {
-          "$ref": "#/$defs/.media_channel.MediaSource.deprecated_ids"
-        },
-        "friendly_name": {
+        "name": {
           "oneOf": [
             {
               "type": "null"
             },
             {
-              "$ref": "#/$defs/.media_channel.MediaSource.friendly_name"
+              "$ref": "#/$defs/.media_channel.MediaSource.name"
+            }
+          ]
+        },
+        "instance_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.MediaSource.instance_id"
             }
           ]
         },
         "application_name": {
-          "$ref": "#/$defs/.media_channel.MediaSource.application_name"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.MediaSource.application_name"
+            }
+          ]
+        },
+        "deprecated_ids": {
+          "$ref": "#/$defs/.media_channel.MediaSource.deprecated_ids"
         }
       },
       "type": "object",
       "required": [
-        "id",
-        "application_name"
+        "id"
       ],
-      "description": "Information identifying the source of Media Metadata.\n This can e.g. be a plugin in a media player, a browser extension\n or the Application that is playing the media directly."
+      "description": "Information identifying the source of Media Metadata.\n This can e.g. be a Plugin in a media player, a browser extension\n or the Application that is playing the media directly."
     },
     ".media_channel.MediaSource.id": {
       "type": "string",
       "pattern": "^[a-zA-Z][a-zA-Z0-9+-_/\\.]*$",
-      "description": "An identifier of the software that is the source for reported Media.\n This could e.g. be the URL to a GitHub repository without the protocol,\n so receivers of this message know where to go if there are issues.\n Example: \"github.com/ungive/foo_mediacontrol\" (foobar2000 plugin)\n Example: \"github.com/ungive/media-control-extension\" (browser extension)"
+      "description": "An arbitrary identifier of the Media Source (Plugin or Application) that\n is reporting the media. A meaningful value should be chosen for this ID.\n Example: \"github.com/ungive/foo_mediacontrol\" (foobar2000 plugin)\n Example: \"github.com/ungive/media-control-extension\" (browser extension)\n Example: \"your-app-name\" (standalone application, not a plugin)"
     },
-    ".media_channel.MediaSource.deprecated_ids": {
-      "items": {
-        "type": "string",
-        "description": "Identifiers that were previously used for the \"id\" field of this message.\n Communicating these is useful when e.g. a repository URL is used as an ID,\n but the repository moved to a different URL."
-      },
-      "type": "array",
-      "description": "Identifiers that were previously used for the \"id\" field of this message.\n Communicating these is useful when e.g. a repository URL is used as an ID,\n but the repository moved to a different URL."
-    },
-    ".media_channel.MediaSource.friendly_name": {
+    ".media_channel.MediaSource.name": {
       "type": "string",
       "pattern": "^[ -~]+$",
-      "description": "A user-friendly, easy-to-read display name for this source.\n Should be the name of the software as known to users of the Application.\n Recommended to only be used by Application plugins or extensions.\n Example: \"foo_mediacontrol plugin\" (foobar2000 plugin)\n Example: \"Media Control extension\" (browser extension)"
+      "description": "A user-friendly, easy-to-read display name for this Media Source.\n Should be the name of the Plugin or Application that is known to the user.\n Example: \"foo_mediacontrol\" (foobar2000 plugin)\n Example: \"Media Control\" (browser extension)\n Example: \"Your App Name\" (standalone application)"
+    },
+    ".media_channel.MediaSource.instance_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "An identifier of this Plugin's instance. This is used to disambiguate\n multiple instances of the same Media Source, in case they have the same\n value in the \"id\" field. An example for this may be a browser extension\n that is running in multiple browsers (Applications) on the same device.\n May only contain alphanumeric characters and underscores.\n This field is optional.\n Examples: \"google_chrome\", \"firefox\", \"INSTANCE_1\" or \"1\""
     },
     ".media_channel.MediaSource.application_name": {
       "type": "string",
       "pattern": "^[ -~]+$",
-      "description": "The name of the application the software for this source is running in.\n Example: \"foobar2000\" or \"Firefox\""
+      "description": "The name of the Application instance that is playing the media, if any.\n Should be set if a Plugin that is running as part of the Application\n is reporting the Media Metadata on behalf of the Application.\n Should not be set if the Application is reporting the media directly,\n as the application name should already be set in the \"name\" field.\n Example: \"foobar2000\", \"Google Chrome\" or \"Firefox\""
+    },
+    ".media_channel.MediaSource.deprecated_ids": {
+      "items": {
+        "type": "string",
+        "pattern": "^[a-zA-Z][a-zA-Z0-9+-_/\\.]*$",
+        "description": "Identifiers that were used in the past by this Media Source.\n Communicating these is useful when e.g. a repository URL is used\n as an ID, but the repository moved to a different URL.\n Example: [\"github.com/user/old_repo\"]"
+      },
+      "type": "array",
+      "description": "Identifiers that were used in the past by this Media Source.\n Communicating these is useful when e.g. a repository URL is used\n as an ID, but the repository moved to a different URL.\n Example: [\"github.com/user/old_repo\"]"
     }
   },
   "type": "object"
