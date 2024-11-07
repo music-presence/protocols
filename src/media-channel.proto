@@ -88,7 +88,7 @@ message MediaSource {
 // Sends metadata about the Application that is connecting to the Hub.
 message Hello {
   // Description of the Media Source that connected to the Hub.
-  MediaSource media_source = 1 [ json_name = "media_source" ];
+  MediaSource source = 1 [ json_name = "source" ];
 }
 
 message Message {

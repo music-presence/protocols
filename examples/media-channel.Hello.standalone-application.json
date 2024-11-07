@@ -2,7 +2,7 @@
   "$schema": "../dist/schemas/media-channel.Message.schema.json",
   "$comment": "Example of a standalone Application being the Media Source",
   "hello": {
-    "media_source": {
+    "source": {
       "id": "tidal.com",
       "name": "TIDAL"
     }
