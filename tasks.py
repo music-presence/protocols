@@ -5,10 +5,10 @@ from typing import Optional
 import sys
 
 sys.path.append("./build/py")
-import build.py.media_channel_pb2
+from build.py import media_channel_pb2 as media_channel
 
 proto_message_names = {
-    "media-channel": build.py.media_channel_pb2.DESCRIPTOR.message_types_by_name.keys()
+    "media-channel": media_channel.DESCRIPTOR.message_types_by_name.keys()
 }
 
 

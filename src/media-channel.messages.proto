@@ -1,0 +1,176 @@
+syntax = "proto3";
+
+// production: no
+
+// For definitions of terms used in this file check the Glossary in the spec.
+
+package media_channel;
+
+import "google/protobuf/timestamp.proto";
+import "jsonschema.proto";
+
+// An identifier for a Media Source.
+message SourceIdentifier {
+
+  // An arbitrary identifier. A meaningful value should be chosen.
+  // Example: "github.com/ungive/foo_mediacontrol" (foobar2000 plugin)
+  // Example: "github.com/ungive/media-control-extension" (browser extension)
+  // Example: "your-app-name" (standalone application, not a plugin)
+  string id = 1 [
+    json_name = "id",
+    (pubg.jsonschema.field) = {
+      string : {pattern : "^[a-zA-Z][a-zA-Z0-9+-_/\\.]*$"}
+    }
+  ];
+
+  // A user-friendly display name for this Media Source.
+  // Example: "foo_mediacontrol" (foobar2000 plugin)
+  // Example: "Media Control" (browser extension)
+  // Example: "TIDAL" (standalone application)
+  optional string name = 2 [
+    json_name = "name",
+    (pubg.jsonschema.field) = {string : {pattern : "^[ -~]+$"}}
+  ];
+
+  // Identifiers that were used for the "id" field in the past.
+  // Communicating these is useful when e.g. a repository URL is used and
+  // the repository moved to a different URL, but it should still be possible
+  // to associate the old identifier with this particular Media Source.
+  // Example: ["github.com/user/old_repo"]
+  // Example: ["old-app-name"]
+  repeated string deprecated_ids = 3 [
+    json_name = "deprecatedIds",
+    (pubg.jsonschema.field) = {
+      string : {pattern : "^[a-zA-Z][a-zA-Z0-9+-_/\\.]*$"}
+    }
+  ];
+}
+
+// First message sent by an Application to the Hub upon connecting.
+// Sends metadata about the Application that is connecting to the Hub.
+message Hello {
+
+  // The Application that connected to the Hub.
+  SourceIdentifier application = 1 [ json_name = "application" ];
+
+  // Information about the Plugin that reports Media Metadata
+  // on behalf of the Application that connected to the Hub.
+  optional SourceIdentifier plugin = 2 [ json_name = "plugin" ];
+}
+
+message MediaMetadata {
+
+  // The title of the media. This field is mandatory.
+  string title = 1 [
+    json_name = "title",
+    (pubg.jsonschema.field) = {string : {min_length : 1}}
+  ];
+
+  // The artist(s) that created the media.
+  optional string artist = 2 [
+    json_name = "artist",
+    (pubg.jsonschema.field) = {string : {min_length : 1}}
+  ];
+
+  // The album the media was published on.
+  optional string album = 3 [
+    json_name = "album",
+    (pubg.jsonschema.field) = {string : {min_length : 1}}
+  ];
+}
+
+message PlaybackInfo {
+
+  // Whether the Media is playing.
+  bool playing = 1 [ json_name = "playing" ];
+
+  // The current playback position of the Media.
+  float position = 2 [
+    json_name = "position",
+    (pubg.jsonschema.field) = {numeric : {inclusive_minimum : 0}}
+  ];
+
+  // At what time the Media was at the given playback position.
+  google.protobuf.Timestamp position_timestamp = 3
+      [ json_name = "positionTimestamp" ];
+
+  // The duration or length of the Media.
+  optional float duration = 4 [
+    json_name = "duration",
+    (pubg.jsonschema.field) = {numeric : {exclusive_minimum : 0}}
+  ];
+}
+
+message Image {
+  oneof content {
+
+    // A URL to the image.
+    string url = 1 [
+      json_name = "url",
+      (pubg.jsonschema.field) = {string : {format : "uri"}}
+    ];
+
+    // The raw image data.
+    bytes data = 16 [ json_name = "data" ];
+  }
+
+  // The MIME type of the image.
+  optional string mime_type = 2 [
+    json_name = "mimeType",
+    (pubg.jsonschema.field) = {string : {min_length : 1}}
+  ];
+
+  // The width of the image.
+  optional uint32 width = 3 [
+    json_name = "width",
+    (pubg.jsonschema.field) = {numeric : {exclusive_minimum : 0}}
+  ];
+
+  // The height of the image.
+  optional uint32 height = 4 [
+    json_name = "height",
+    (pubg.jsonschema.field) = {numeric : {exclusive_minimum : 0}}
+  ];
+}
+
+message ResourceLinks {
+
+  // A resource URL to access the Media track.
+  optional string track_url = 1 [ json_name = "trackUrl" ];
+
+  // A resource URL to access the album the Media was published on.
+  optional string album_url = 2 [ json_name = "albumUrl" ];
+
+  // Maps one or more artists to a resource URL for the respective artist.
+  map<string, string> artist_urls = 3 [ json_name = "artistUrls" ];
+}
+
+message Media {
+
+  // A different Media Source for this Media.
+  // This is useful when the Application can play media from multiple sources.
+  // If not set, the "application" Source Identifier that was sent in the
+  // Hello message is assumed to be the source of the Media.
+  optional SourceIdentifier source = 1 [ json_name = "source" ];
+
+  // The Media Metadata that describes this Media.
+  MediaMetadata metadata = 2 [ json_name = "metadata" ];
+
+  // Playback information.
+  optional PlaybackInfo playback_info = 3 [ json_name = "playbackInfo" ];
+
+  // One or more available album cover images.
+  repeated Image covers = 4 [ json_name = "covers" ];
+
+  // Internet resource links for this Media.
+  optional ResourceLinks resource_links = 5 [ json_name = "resourceLinks" ];
+}
+
+// An update about Active Media. Whenever this message is sent,
+// Active Media from previous Update messages is invalidated.
+message Update {
+
+  // A list of Active Media within the connected Application.
+  // May be empty if there is no Active Media in the application.
+  repeated Media media = 1 [ json_name = "media" ];
+}

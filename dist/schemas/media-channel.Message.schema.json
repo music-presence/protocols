@@ -561,7 +561,7 @@
           "oneOf": [
             {
               "required": [
-                "playbackInfoooo"
+                "playbackInfo"
               ]
             },
             {
@@ -569,7 +569,7 @@
                 "anyOf": [
                   {
                     "required": [
-                      "playbackInfoooo"
+                      "playbackInfo"
                     ]
                   }
                 ]
@@ -612,7 +612,7 @@
         "metadata": {
           "$ref": "#/$defs/.media_channel.Media.metadata"
         },
-        "playbackInfoooo": {
+        "playbackInfo": {
           "oneOf": [
             {
               "type": "null"
