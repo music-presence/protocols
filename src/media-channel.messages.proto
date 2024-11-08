@@ -46,18 +46,6 @@ message SourceIdentifier {
   ];
 }
 
-// First message sent by an Application to the Hub upon connecting.
-// Sends metadata about the Application that is connecting to the Hub.
-message Hello {
-
-  // The Application that connected to the Hub.
-  SourceIdentifier application = 1 [ json_name = "application" ];
-
-  // Information about the Plugin that reports Media Metadata
-  // on behalf of the Application that connected to the Hub.
-  optional SourceIdentifier plugin = 2 [ json_name = "plugin" ];
-}
-
 message MediaMetadata {
 
   // The title of the media. This field is mandatory.
@@ -164,6 +152,18 @@ message Media {
 
   // Internet resource links for this Media.
   optional ResourceLinks resource_links = 5 [ json_name = "resourceLinks" ];
+}
+
+// First message sent by an Application to the Hub upon connecting.
+// Sends metadata about the Application that is connecting to the Hub.
+message Hello {
+
+  // The Application that connected to the Hub.
+  SourceIdentifier application = 1 [ json_name = "application" ];
+
+  // Information about the Plugin that reports Media Metadata
+  // on behalf of the Application that connected to the Hub.
+  optional SourceIdentifier plugin = 2 [ json_name = "plugin" ];
 }
 
 // An update about Active Media. Whenever this message is sent,
