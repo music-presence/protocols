@@ -2,8 +2,6 @@ syntax = "proto3";
 
 // production: no
 
-// https://music-presence.github.io/protocols/schemas/media-channel.Message.schema.json
-
 package media_channel;
 
 import "media-channel.messages.proto";

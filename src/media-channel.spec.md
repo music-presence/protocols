@@ -4,6 +4,9 @@
 |-|-|
 |2024/11/06|Draft|
 
+- [**JSON Schema**](https://music-presence.github.io/protocols/schemas/media-channel.Message.schema.json)
+- [**Explore schema with json-schema.app**](https://json-schema.app/view/%23?url=https%3A%2F%2Fmusic-presence.github.io%2Fprotocols%2Fschemas%2Fmedia-channel.Message.schema.json)
+
 ## Glossary
 
 **Protocol** - The protocol described in this document.  
