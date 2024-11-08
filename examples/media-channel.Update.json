@@ -1,0 +1,61 @@
+{
+  "$schema": "../dist/schemas/media-channel.Message.schema.json",
+  "update": {
+    "media": [
+      {
+        "source": {
+          "id": "com.tidal.listen"
+        },
+        "metadata": {
+          "title": "Maybe I Am",
+          "artist": "FLETCHER",
+          "album": "In Search Of The Antidote"
+        },
+        "playbackInfo": {
+          "playing": true,
+          "position": 0.312,
+          "positionTimestamp": "2024-11-07T12:38:57.821Z"
+        },
+        "resourceLinks": {
+          "trackUrl": "https://listen.tidal.com/track/351105921",
+          "albumUrl": "https://listen.tidal.com/album/351105920",
+          "artistUrls": {
+            "FLETCHER": "https://listen.tidal.com/artist/10889078"
+          }
+        },
+        "covers": [
+          {
+            "url": "https://resources.tidal.com/images/9842dbb1/898c/4706/ae19/524fb78ce94d/80x80.jpg",
+            "mimeType": "image/jpeg",
+            "width": 80,
+            "height": 80
+          },
+          {
+            "url": "https://resources.tidal.com/images/9842dbb1/898c/4706/ae19/524fb78ce94d/160x160.jpg",
+            "mimeType": "image/jpeg",
+            "width": 160,
+            "height": 160
+          },
+          {
+            "url": "https://resources.tidal.com/images/9842dbb1/898c/4706/ae19/524fb78ce94d/320x320.jpg",
+            "mimeType": "image/jpeg",
+            "width": 320,
+            "height": 320
+          },
+          {
+            "url": "https://resources.tidal.com/images/9842dbb1/898c/4706/ae19/524fb78ce94d/640x640.jpg",
+            "mimeType": "image/jpeg",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "url": "https://resources.tidal.com/images/9842dbb1/898c/4706/ae19/524fb78ce94d/1280x1280.jpg",
+            "mimeType": "image/jpeg",
+            "width": 1280,
+            "height": 1280
+          }
+        ]
+      }
+    ]
+  }
+}

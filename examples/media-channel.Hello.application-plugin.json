@@ -8,7 +8,10 @@
     },
     "plugin": {
       "id": "github.com/ungive/foo_mediacontrol",
-      "name": "foo_mediacontrol"
+      "name": "foo_mediacontrol",
+      "deprecatedIds": [
+        "github.com/Hual/foo_mediacontrol"
+      ]
     }
   }
 }

@@ -11,17 +11,24 @@
 shortened to "Hub" for brevity.  
 **Application** - Any other application running on a desktop computer.  
 **Plugin** - A piece of software running inside an Application
-that is not directly part of the Application.
+that is not directly part of the Application
+which reports Media Metadata on behalf of the Application.
 Browser extensions are also considered plugins.  
-**Media** - Digital media including music and videos.
+**Media** - Digital media including music and videos
 that is played back by an Application.  
-**Media Metadata** - Information describing and identifying the Media,
+**Media Metadata** - Information describing and identifying Media,
 e.g. media title, artist and album.  
+**Active Media** - Media that is currently relevant
+to the user of the Application.
+This always includes playing Media
+and may also include paused Media that may have been playing before.  
 **Media Source** - A source of Media,
-such as an Application or a Plugin in an Application.  
+such as an Application, a Plugin in an Application,
+a website or any other possible source.  
+**Source Identifier** - A unique identifier for a Media Source.  
 **Native API** - An operating-system-specific, natively supported API
 that supplies Media Metadata about Media that is being played by an Application
-and that is usually consumed by the Hub to get information about playing media.
+and that is usually consumed by the Hub to get information about playing Media.
 This would be e.g. SMTC on Windows 10 and later,
 MediaRemote on macOS 11 and later
 and MPRIS on Linux devices.  

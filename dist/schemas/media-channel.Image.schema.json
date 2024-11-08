@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/.media_channel.Image",
+  "$defs": {
+    ".media_channel.Image": {
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "url"
+              ]
+            },
+            {
+              "required": [
+                "data"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "url"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "data"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "mimeType"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "mimeType"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "width"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "width"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "height"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "height"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "url": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.Image.url"
+            }
+          ]
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.Image.data"
+            }
+          ]
+        },
+        "mimeType": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.Image.mime_type"
+            }
+          ]
+        },
+        "width": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.Image.width"
+            }
+          ]
+        },
+        "height": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.Image.height"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    ".media_channel.Image.url": {
+      "type": "string",
+      "format": "uri",
+      "description": "A URL to the image."
+    },
+    ".media_channel.Image.data": {
+      "type": "string",
+      "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+      "description": "The raw image data."
+    },
+    ".media_channel.Image.mime_type": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The MIME type of the image."
+    },
+    ".media_channel.Image.width": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "description": "The width of the image."
+    },
+    ".media_channel.Image.height": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "description": "The height of the image."
+    }
+  },
+  "type": "object"
+}

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$ref": "#/$defs/.media_channel.Message",
+  "$ref": "#/$defs/.media_channel.Media",
   "$defs": {
     ".media_channel.SourceIdentifier": {
       "allOf": [
@@ -67,58 +67,6 @@
       },
       "type": "array",
       "description": "Identifiers that were used for the \"id\" field in the past.\n Communicating these is useful when e.g. a repository URL is used and\n the repository moved to a different URL, but it should still be possible\n to associate the old identifier with this particular Media Source.\n Example: [\"github.com/user/old_repo\"]\n Example: [\"old-app-name\"]"
-    },
-    ".media_channel.Hello": {
-      "allOf": [
-        {
-          "oneOf": [
-            {
-              "required": [
-                "plugin"
-              ]
-            },
-            {
-              "not": {
-                "anyOf": [
-                  {
-                    "required": [
-                      "plugin"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
-      "properties": {
-        "application": {
-          "$ref": "#/$defs/.media_channel.Hello.application"
-        },
-        "plugin": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/$defs/.media_channel.Hello.plugin"
-            }
-          ]
-        }
-      },
-      "type": "object",
-      "required": [
-        "application"
-      ],
-      "description": "First message sent by an Application to the Hub upon connecting.\n Sends metadata about the Application that is connecting to the Hub."
-    },
-    ".media_channel.Hello.application": {
-      "$ref": "#/$defs/.media_channel.SourceIdentifier",
-      "description": "The Application that connected to the Hub."
-    },
-    ".media_channel.Hello.plugin": {
-      "$ref": "#/$defs/.media_channel.SourceIdentifier",
-      "description": "Information about the Plugin that reports Media Metadata\n on behalf of the Application that connected to the Hub."
     },
     ".media_channel.MediaMetadata": {
       "allOf": [
@@ -664,86 +612,6 @@
     ".media_channel.Media.resource_links": {
       "$ref": "#/$defs/.media_channel.ResourceLinks",
       "description": "Internet resource links for this Media."
-    },
-    ".media_channel.Update": {
-      "properties": {
-        "media": {
-          "$ref": "#/$defs/.media_channel.Update.media"
-        }
-      },
-      "type": "object",
-      "description": "An update about Active Media. Whenever this message is sent,\n Active Media from previous Update messages is invalidated."
-    },
-    ".media_channel.Update.media": {
-      "items": {
-        "$ref": "#/$defs/.media_channel.Media",
-        "description": "A list of Active Media within the connected Application.\n May be empty if there is no Active Media in the application."
-      },
-      "type": "array",
-      "description": "A list of Active Media within the connected Application.\n May be empty if there is no Active Media in the application."
-    },
-    ".media_channel.Message": {
-      "allOf": [
-        {
-          "oneOf": [
-            {
-              "required": [
-                "hello"
-              ]
-            },
-            {
-              "required": [
-                "update"
-              ]
-            },
-            {
-              "not": {
-                "anyOf": [
-                  {
-                    "required": [
-                      "hello"
-                    ]
-                  },
-                  {
-                    "required": [
-                      "update"
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
-      "properties": {
-        "hello": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/$defs/.media_channel.Message.hello"
-            }
-          ]
-        },
-        "update": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/$defs/.media_channel.Message.update"
-            }
-          ]
-        }
-      },
-      "type": "object"
-    },
-    ".media_channel.Message.hello": {
-      "$ref": "#/$defs/.media_channel.Hello"
-    },
-    ".media_channel.Message.update": {
-      "$ref": "#/$defs/.media_channel.Update"
     }
   },
   "type": "object"

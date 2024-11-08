@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/.media_channel.MediaMetadata",
+  "$defs": {
+    ".media_channel.MediaMetadata": {
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "artist"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "artist"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "album"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "album"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/.media_channel.MediaMetadata.title"
+        },
+        "artist": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.MediaMetadata.artist"
+            }
+          ]
+        },
+        "album": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/.media_channel.MediaMetadata.album"
+            }
+          ]
+        }
+      },
+      "type": "object",
+      "required": [
+        "title"
+      ]
+    },
+    ".media_channel.MediaMetadata.title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The title of the media. This field is mandatory."
+    },
+    ".media_channel.MediaMetadata.artist": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The artist(s) that created the media."
+    },
+    ".media_channel.MediaMetadata.album": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The album the media was published on."
+    }
+  },
+  "type": "object"
+}
